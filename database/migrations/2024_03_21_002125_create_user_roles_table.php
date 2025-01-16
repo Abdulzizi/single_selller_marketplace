@@ -6,19 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::create('m_user_roles', function (Blueprint $table) {
+        Schema::create('user_roles', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->char('name', 50);
-            $table->text('access');
+            $table->string('name', 50)->comment('Role name, e.g., superadmin, seller, client');
+
             $table->timestamps();
             $table->softDeletes();
+
             $table->integer('created_by')->default(0);
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);
@@ -27,13 +23,8 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('m_user_roles');
+        Schema::dropIfExists('user_roles');
     }
 };
