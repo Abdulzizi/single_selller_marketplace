@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
+
+            // Foreign key
             $table->uuid('user_roles_id')->comment('Fill with id from table user_roles');
 
             $table->string('name', 100)

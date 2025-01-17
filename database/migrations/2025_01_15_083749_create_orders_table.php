@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->primary();
+
+            // Foreign key
             $table->uuid('user_id')->comment('ID from users table');
+            $table->uuid('product_detail_id')->nullable()
+                ->comment('ID from product_details table');
+
             $table->decimal('total_price', 12, 2)->comment('Total price of the order');
             $table->enum('status', ['pending', 'processing', 'shipped', 'completed', 'cancelled'])
                 ->default('pending')
@@ -28,6 +33,7 @@ return new class extends Migration
 
             $table->index('user_id');
             $table->index('status');
+            $table->index('product_detail_id');
 
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

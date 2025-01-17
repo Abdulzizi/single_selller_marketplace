@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_details', function (Blueprint $table) {
+        Schema::create('product_details', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
             // Foreign key
-            $table->uuid('order_id')->comment('ID from orders table');
             $table->uuid('product_id')->comment('ID from products table');
 
-            $table->integer('quantity')->comment('Quantity of product ordered');
-            $table->decimal('price', 12, 2)->comment('Price of the product at the time of order');
-            $table->decimal('total', 12, 2)->comment('Total price for this product line');
+            $table->string('type')
+                ->comment('Fill with type of detail product');
+            $table->string('description', 255)
+                ->comment('Fill with description of detail product, ex : Topping Telur');
+            $table->double('price')->default(0)
+                ->comment('Fill price of product details');
 
             $table->timestamps();
             $table->softDeletes();
@@ -29,11 +31,8 @@ return new class extends Migration
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);
 
-            $table->index('order_id');
             $table->index('product_id');
-
-            // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->index('id');
         });
     }
 
@@ -42,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order_details');
+        Schema::dropIfExists('product_details');
     }
 };

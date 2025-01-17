@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->uuid('id')->primary();
+
+            // Foreign key
             $table->uuid('user_id')->nullable()->comment('ID from users table (null for guests)');
             $table->uuid('product_id')->comment('ID from products table');
+            $table->uuid('product_detail_id')->nullable()
+                ->comment('ID from product_details table');
+
             $table->integer('quantity')->comment('Quantity of product in the cart');
 
             $table->timestamps();
@@ -26,6 +31,7 @@ return new class extends Migration
 
             $table->index('user_id');
             $table->index('product_id');
+            $table->index('product_detail_id');
 
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

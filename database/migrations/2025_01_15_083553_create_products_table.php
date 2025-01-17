@@ -13,12 +13,27 @@
         {
             Schema::create('products', function (Blueprint $table) {
                 $table->uuid('id')->primary();
-                $table->string('name', 255)->comment('Product name');
-                $table->text('description')->nullable()->comment('Product description');
-                $table->decimal('price', 12, 2)->comment('Product price');
-                $table->integer('stock')->default(0)->comment('Product stock quantity');
-                $table->string('image_url', 255)->nullable()->comment('URL for product image');
-                $table->boolean('is_active')->default(true)->comment('Product availability status');
+
+                // Foreign key
+                $table->uuid('category_id')->comment('ID from categories table');
+
+                $table->string('name', 150)
+                    ->comment('Fill with name of product');
+                $table->double('price')
+                    ->comment('Fill price of product');
+                $table->text('description')
+                    ->comment('Fill description of product')
+                    ->nullable();
+                $table->text('slug')->unique()->comment('Product slug');
+                $table->text('photo_desktop')
+                    ->comment('Fill path of photo desktop product')
+                    ->nullable();
+                $table->text('photo_mobile')
+                    ->comment('Fill path of photo mobile product')
+                    ->nullable();
+                $table->tinyInteger('is_available')
+                    ->comment('Fill with "1" is product available, fill with "0" if product is unavailable')
+                    ->default(0);
 
                 $table->timestamps();
                 $table->softDeletes();
@@ -28,7 +43,7 @@
                 $table->integer('deleted_by')->default(0);
 
                 $table->index('name');
-                $table->index('is_active');
+                $table->index('category_id');
             });
         }
 
