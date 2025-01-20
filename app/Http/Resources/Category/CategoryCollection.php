@@ -18,7 +18,7 @@ class CategoryCollection extends ResourceCollection
             'list' => $this->collection,
             'meta' => [
                 'links' => $this->getUrlRange(1, $this->lastPage()),
-                'total' => $this->total()
+                'total' => $this->total(),
             ]
         ];
     }

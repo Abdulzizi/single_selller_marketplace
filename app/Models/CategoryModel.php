@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\SlugHelper;
 use App\Http\Traits\Uuid;
 use App\Repository\CrudInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +20,7 @@ class CategoryModel extends Model implements CrudInterface
     protected $fillable = [
         'name',
         'description',
-        'slug',
+        'slug'
     ];
 
     protected $table = 'categories';
@@ -41,17 +42,17 @@ class CategoryModel extends Model implements CrudInterface
 
     public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
     {
-        $user = $this->query();
+        $categories = $this->query();
 
         if (!empty($filter['name'])) {
-            $user->where('name', 'LIKE', '%' . $filter['name'] . '%');
+            $categories->where('name', 'LIKE', '%' . $filter['name'] . '%');
         }
 
         $sort = $sort ?: 'id DESC';
-        $user->orderByRaw($sort);
+        $categories->orderByRaw($sort);
         $itemPerPage = ($itemPerPage > 0) ? $itemPerPage : false;
 
-        return $user->paginate($itemPerPage)->appends('sort', $sort);
+        return $categories->paginate($itemPerPage)->appends('sort', $sort);
     }
 
     public function getById(string $id)
@@ -61,6 +62,8 @@ class CategoryModel extends Model implements CrudInterface
 
     public function store(array $payload)
     {
+        $payload['slug'] = SlugHelper::createUniqueSlug($payload['name'], self::class);
+
         return $this->create($payload);
     }
 }

@@ -13,6 +13,7 @@ class CategoryController extends Controller
 {
     private $categoryHelper;
 
+
     public function __construct()
     {
         $this->categoryHelper = new CategoryHelper();
@@ -45,7 +46,7 @@ class CategoryController extends Controller
             return response()->failed($request->validator->errors());
         }
 
-        $payload = $request->only(['name']);
+        $payload = $request->only(['name', 'description']);
         $category = $this->categoryHelper->create($payload);
 
         if (!$category['status']) {

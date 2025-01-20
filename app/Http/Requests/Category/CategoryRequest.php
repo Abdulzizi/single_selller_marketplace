@@ -32,6 +32,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|max:150',
+            'description' => 'required'
         ];
     }
 
@@ -39,7 +40,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|max:150',
-            'id' => 'required'
+            'id' => 'required|exists:categories,id',
         ];
     }
 }
