@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('name', 100)->comment('Category name');
             $table->text('description')->nullable()->comment('Category description');
-            $table->text('slug')->unique()->comment('Category slug');
+            $table->string('slug', 255)->unique()->comment('Category slug');
 
             $table->timestamps();
             $table->softDeletes();

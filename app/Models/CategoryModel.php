@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class RoleModel extends Model implements CrudInterface
+class CategoryModel extends Model implements CrudInterface
 {
     use HasFactory;
     use SoftDeletes;
@@ -18,15 +18,16 @@ class RoleModel extends Model implements CrudInterface
 
     protected $fillable = [
         'name',
-        'access',
+        'description',
+        'slug',
     ];
 
-    public function users()
-    {
-        return $this->hasMany(UserModel::class, 'user_roles_id', 'id');
-    }
+    protected $table = 'categories';
 
-    protected $table = 'user_roles';
+    public function products()
+    {
+        return $this->hasMany(ProductModel::class, 'category_id', 'id');
+    }
 
     public function drop(string $id)
     {
@@ -38,22 +39,19 @@ class RoleModel extends Model implements CrudInterface
         return $this->find($id)->update($payload);
     }
 
-    public function getAll(array $filter, int $page = 1, int $itemPerPage = 0, string $sort = '')
+    public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
     {
-        $skip = ($page * $itemPerPage) - $itemPerPage;
-        $role = $this->query();
+        $user = $this->query();
 
-        if (! empty($filter['name'])) {
-            $role->where('name', 'LIKE', '%' . $filter['name'] . '%');
+        if (!empty($filter['name'])) {
+            $user->where('name', 'LIKE', '%' . $filter['name'] . '%');
         }
 
-        $total = $role->count();
-        $list = $role->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
+        $sort = $sort ?: 'id DESC';
+        $user->orderByRaw($sort);
+        $itemPerPage = ($itemPerPage > 0) ? $itemPerPage : false;
 
-        return [
-            'total' => $total,
-            'data' => $list,
-        ];
+        return $user->paginate($itemPerPage)->appends('sort', $sort);
     }
 
     public function getById(string $id)

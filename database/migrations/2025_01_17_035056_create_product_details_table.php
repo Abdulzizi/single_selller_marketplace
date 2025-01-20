@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('type')
                 ->comment('Fill with type of detail product');
             $table->string('description', 255)
-                ->comment('Fill with description of detail product, ex : Topping Telur');
+                ->comment('Fill with description of detail product, ex : L sized tshirt');
             $table->double('price')->default(0)
                 ->comment('Fill price of product details');
 

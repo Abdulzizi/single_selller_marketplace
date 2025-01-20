@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SiteController;
 use App\Http\Controllers\Api\UserController;
@@ -35,6 +36,12 @@ Route::prefix('v1')->group(function () {
     Route::post('/roles', [RoleController::class, 'store']); //->middleware(['auth.api', 'role:roles.create']);
     Route::put('/roles', [RoleController::class, 'update']); //->middleware(['auth.api', 'role:roles.update']);
     Route::delete('/roles/{id}', [RoleController::class, 'destroy']); //->middleware(['auth.api', 'role:roles.delete']);
+
+    Route::get('/categories', [CategoryController::class, 'index']); //->middleware(['auth.api', 'role:categories.view']);
+    Route::get('/categories/{id}', [CategoryController::class, 'show']); //->middleware(['auth.api', 'role:categories.view']);
+    Route::post('/categories', [CategoryController::class, 'store']); //->middleware(['auth.api', 'role:categories.create']);
+    Route::put('/categories', [CategoryController::class, 'update']); //->middleware(['auth.api', 'role:categories.update']);
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy']); //->middleware(['auth.api', 'role:categories.delete']);
 });
 
 Route::get('/', function () {

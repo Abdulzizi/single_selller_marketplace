@@ -24,7 +24,7 @@
                 $table->text('description')
                     ->comment('Fill description of product')
                     ->nullable();
-                $table->text('slug')->unique()->comment('Product slug');
+                $table->string('slug', 255)->unique()->comment('Product slug');
                 $table->text('photo_desktop')
                     ->comment('Fill path of photo desktop product')
                     ->nullable();

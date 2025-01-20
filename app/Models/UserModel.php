@@ -45,16 +45,22 @@ class UserModel extends Authenticatable implements CrudInterface, JWTSubject
      *
      * @var string
      */
-    protected $table = 'm_user';
+    protected $table = 'users';
 
-    /**
-     * Relation to Role
-     *
-     * @return void
-     */
+    // Relasi
     public function role()
     {
-        return $this->hasOne(RoleModel::class, 'id', 'm_user_roles_id');
+        return $this->belongsTo(RoleModel::class, 'user_roles_id', 'id');
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(CartModel::class, 'user_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(OrderModel::class, 'user_id', 'id');
     }
 
     /**
@@ -123,11 +129,11 @@ class UserModel extends Authenticatable implements CrudInterface, JWTSubject
         $user = $this->query();
 
         if (! empty($filter['name'])) {
-            $user->where('name', 'LIKE', '%'.$filter['name'].'%');
+            $user->where('name', 'LIKE', '%' . $filter['name'] . '%');
         }
 
         if (! empty($filter['email'])) {
-            $user->where('email', 'LIKE', '%'.$filter['email'].'%');
+            $user->where('email', 'LIKE', '%' . $filter['email'] . '%');
         }
 
         $total = $user->count();
