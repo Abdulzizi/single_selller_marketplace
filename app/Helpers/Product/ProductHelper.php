@@ -71,13 +71,13 @@ class ProductHelper extends Venturo
         }
     }
 
-    public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
+    public function getAll(array $filter, int $page = 1, int $itemPerPage = 0, string $sort = '')
     {
-        $categories = $this->productModel->getAll($filter, $itemPerPage, $sort);
+        $products = $this->productModel->getAll($filter, $page, $itemPerPage, $sort);
 
         return [
             'status' => true,
-            'data' => $categories
+            'data' => $products
         ];
     }
 

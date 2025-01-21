@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\SlugHelper;
 use App\Http\Traits\Uuid;
 use App\Repository\CrudInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,11 +59,15 @@ class ProductModel extends Model implements CrudInterface
 
     public function edit(array $payload, string $id)
     {
+        $payload['slug'] = SlugHelper::createUniqueSlug($payload['name'], self::class);
+
         return $this->find($id)->update($payload);
     }
 
     public function store(array $payload)
     {
+        $payload['slug'] = SlugHelper::createUniqueSlug($payload['name'], self::class);
+
         return $this->create($payload);
     }
 
@@ -70,23 +75,23 @@ class ProductModel extends Model implements CrudInterface
     public function getAll(array $filter, int $page = 1, int $itemPerPage = 0, string $sort = '')
     {
         $skip = ($page * $itemPerPage) - $itemPerPage;
-        $categoryDetail = $this->query();
+        $products = $this->query();
 
         if (!empty($filter['name'])) {
-            $categoryDetail->where('name', 'LIKE', '%' . $filter['name'] . '%');
+            $products->where('name', 'LIKE', '%' . $filter['name'] . '%');
         }
 
         if (!empty($filter['category_id'])) {
-            $categoryDetail->where('product_id', 'LIKE', '%' . $filter['product_id'] . '%');
+            $products->where('product_id', 'LIKE', '%' . $filter['product_id'] . '%');
         }
 
         if ($filter['is_available'] != '') {
-            $categoryDetail->where('is_available', '=', $filter['is_available']);
+            $products->where('is_available', '=', $filter['is_available']);
         }
 
-        $total = $categoryDetail->count();
+        $total = $products->count();
         $sort = $sort ?: 'id DESC';
-        $list = $categoryDetail->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
+        $list = $products->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
 
         return [
             'total' => $total,
