@@ -1,0 +1,31 @@
+# TODO LIST FOR MAKING CRUD
+
+## Categories
+- [x] Create model, migration, and seeder for categories
+- [x] Create controller, request, and resource for categories
+- [x] Define routes for categories
+- [x] Implement CRUD for categories
+
+## Products
+- [ ] Create model, migration, and seeder for products
+- [ ] Create controller, request, and resource for products
+- [ ] Define routes for products
+- [ ] Implement CRUD for products
+
+## Products Details
+- [ ] Create model, migration, and seeder for products details
+- [ ] Create controller, request, and resource for products details
+- [ ] Define routes for products details
+- [ ] Implement CRUD for products details
+
+## Carts
+- [ ] Create model, migration, and seeder for carts
+- [ ] Create controller, request, and resource for carts
+- [ ] Define routes for carts
+- [ ] Implement CRUD for carts
+
+## Orders
+- [ ] Create model, migration, and seeder for orders
+- [ ] Create controller, request, and resource for orders
+- [ ] Define routes for orders
+- [ ] Implement CRUD for orders
