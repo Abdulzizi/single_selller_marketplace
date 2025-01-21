@@ -89,7 +89,7 @@ class UserController extends Controller
             return response()->failed($request->validator->errors());
         }
 
-        $payload = $request->only(['email', 'name', 'password', 'photo', 'phone_number', 'm_user_roles_id']);
+        $payload = $request->only(['email', 'name', 'password', 'photo', 'phone_number', 'user_roles_id']);
         $user = $this->userHelper->create($payload);
 
         if (! $user['status']) {
@@ -114,7 +114,7 @@ class UserController extends Controller
             return response()->failed($request->validator->errors());
         }
 
-        $payload = $request->only(['email', 'name', 'password', 'photo', 'phone_number', 'm_user_roles_id']);
+        $payload = $request->only(['email', 'name', 'password', 'photo', 'phone_number', 'user_roles_id']);
         $user = $this->userHelper->update($payload, $id ?? 0);
 
         if (! $user['status']) {

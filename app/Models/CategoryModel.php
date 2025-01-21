@@ -37,6 +37,8 @@ class CategoryModel extends Model implements CrudInterface
 
     public function edit(array $payload, string $id)
     {
+        $payload['slug'] = SlugHelper::createUniqueSlug($payload['name'], self::class);
+
         return $this->find($id)->update($payload);
     }
 

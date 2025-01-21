@@ -12,6 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->string('name', 50)->comment('Role name, e.g., superadmin, seller, client');
+            $table->text('access');
 
             $table->timestamps();
             $table->softDeletes();
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->integer('updated_by')->default(0);
             $table->integer('deleted_by')->default(0);
 
+            $table->index('id');
             $table->index('name');
         });
     }
