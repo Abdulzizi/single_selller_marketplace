@@ -37,10 +37,12 @@ class ProductRequest extends FormRequest
             'name.max' => 'Nama produk tidak boleh lebih dari 150 karakter.',
             'price.required' => 'Harga produk wajib diisi.',
             'price.numeric' => 'Harga produk harus berupa angka.',
+
             'photo_desktop.file' => 'Foto produk desktop harus berupa file yang valid.',
             'photo_desktop.image' => 'Foto produk desktop harus berupa gambar.',
             'photo_mobile.file' => 'Foto produk mobile harus berupa file yang valid.',
             'photo_mobile.image' => 'Foto produk mobile harus berupa gambar.',
+
             'is_available.required' => 'Ketersediaan produk wajib diisi.',
             'is_available.numeric' => 'Ketersediaan produk harus berupa angka.',
             'is_available.max' => 'Nilai ketersediaan produk tidak boleh lebih dari 1.',

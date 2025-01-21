@@ -43,14 +43,16 @@ class ProductController extends Controller
             'name',
             'price',
             'description',
+
             'photo_desktop',
             'photo_mobile',
+
             'is_available',
             'details',
             'product_category_id'
         ]);
 
-        // $payload['product_category_id'] = $payload['product_category_id'];
+        $payload['category_id'] = $payload['product_category_id'];
         $product = $this->productHelper->create($payload);
 
         if (!$product['status']) {
@@ -81,8 +83,10 @@ class ProductController extends Controller
             'name',
             'price',
             'description',
+
             'photo_desktop',
             'photo_mobile',
+
             'is_available',
             'details',
             'details_deleted',
@@ -92,9 +96,8 @@ class ProductController extends Controller
 
         // dd($payload);
 
-        // $payload['m_product_category_id'] = $payload['product_category_id'];
+        $payload['category_id'] = $payload['product_category_id'];
 
-        // deleted code : $payload['id'] ?? 0
         $product = $this->productHelper->update($payload);
 
         if (!$product['status']) {
