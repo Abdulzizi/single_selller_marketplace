@@ -39,30 +39,64 @@ class UserRequest extends FormRequest
         if ($this->isMethod('post')) {
             return $this->createRules();
         }
-
         return $this->updateRules();
     }
 
+    public function messages(): array
+    {
+        return [
+            // Common fields
+            'name.required' => 'Nama pengguna wajib diisi.',
+            'name.max' => 'Nama pengguna tidak boleh lebih dari 100 karakter.',
+            'photo.file' => 'Foto pengguna harus berupa file yang valid.',
+            'photo.image' => 'Foto pengguna harus berupa gambar.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Email harus berupa alamat email yang valid.',
+            'email.unique' => 'Email ini sudah terdaftar.',
+            'password.required' => 'Kata sandi wajib diisi.',
+            'password.min' => 'Kata sandi harus memiliki minimal 6 karakter.',
+            'phone_number.numeric' => 'Nomor telepon harus berupa angka.',
+            'user_roles_id.required' => 'Peran pengguna wajib diisi.',
+
+            // Update specific fields
+            'password.nullable' => 'Kata sandi hanya boleh diisi jika ingin mengubahnya.',
+            'phone_number.nullable' => 'Nomor telepon bersifat opsional.',
+            'user_roles_id.nullable' => 'Peran pengguna bersifat opsional.',
+        ];
+    }
+
+
+    /**
+     * Create rules.
+     *
+     * @return array
+     */
     private function createRules(): array
     {
         return [
             'name' => 'required|max:100',
             'photo' => 'nullable|file|image',
-            'email' => 'required|email|unique:m_user',
+            'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'phone_number' => 'numeric',
-            'm_user_roles_id' => 'required',
+            'user_roles_id' => 'required',
         ];
     }
 
+    /**
+     * Update rules.
+     *
+     * @return array
+     */
     private function updateRules(): array
     {
         return [
-            'name' => 'required|max:100',
+            'name' => 'max:100',
             'photo' => 'nullable|file|image',
-            'email' => 'required|email|unique:m_user,email,'.$this->id,
-            'phone_number' => 'numeric',
-            'm_user_roles_id' => 'required',
+            'email' => 'email|unique:users,email,' . $this->input('id'),
+            'password' => 'nullable|min:6',
+            'phone_number' => 'nullable|numeric',
+            'user_roles_id' => 'nullable',
         ];
     }
 

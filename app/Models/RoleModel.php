@@ -48,6 +48,7 @@ class RoleModel extends Model implements CrudInterface
         }
 
         $total = $role->count();
+        $sort = $sort ?: 'id DESC';
         $list = $role->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
 
         return [

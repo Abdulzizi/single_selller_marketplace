@@ -40,19 +40,23 @@ class CategoryModel extends Model implements CrudInterface
         return $this->find($id)->update($payload);
     }
 
-    public function getAll(array $filter, int $itemPerPage = 0, string $sort = '')
+    public function getAll(array $filter, int $page = 1, int $itemPerPage = 0, string $sort = '')
     {
-        $categories = $this->query();
+        $skip = ($page * $itemPerPage) - $itemPerPage;
+        $category = $this->query();
+        $total = $category->count();
 
-        if (!empty($filter['name'])) {
-            $categories->where('name', 'LIKE', '%' . $filter['name'] . '%');
+        if (! empty($filter['name'])) {
+            $category->where('name', 'LIKE', '%' . $filter['name'] . '%');
         }
 
         $sort = $sort ?: 'id DESC';
-        $categories->orderByRaw($sort);
-        $itemPerPage = ($itemPerPage > 0) ? $itemPerPage : false;
+        $list = $category->skip($skip)->take($itemPerPage)->orderByRaw($sort)->get();
 
-        return $categories->paginate($itemPerPage)->appends('sort', $sort);
+        return [
+            'total' => $total,
+            'data' => $list,
+        ];
     }
 
     public function getById(string $id)

@@ -8,7 +8,7 @@ interface CrudInterface
 
     public function edit(array $payload, string $id);
 
-    public function getAll(array $filter, int $itemPerPage, string $sort);
+    public function getAll(array $filter, int $page, int $itemPerPage, string $sort);
 
     public function getById(string $id);
 

@@ -48,12 +48,11 @@ class RoleController extends Controller
         $roles = $this->roleHelper->getAll($filter, $request->page ?? 1, $request->per_page ?? 25, $request->sort ?? '');
 
         return response()->success([
-            'list' => RoleResource::collection($roles['data']),
+            'list' => RoleResource::collection($roles['data']['data']),
             'meta' => [
-                'total' => $roles['total'],
+                'total' => $roles['data']['total'],
             ],
         ]);
-
     }
 
     /**

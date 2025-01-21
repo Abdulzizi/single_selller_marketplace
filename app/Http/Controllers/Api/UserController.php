@@ -49,9 +49,9 @@ class UserController extends Controller
         $users = $this->userHelper->getAll($filter, $request->page ?? 1, $request->per_page ?? 25, $request->sort ?? '');
 
         return response()->success([
-            'list' => UserResource::collection($users['data']),
+            'list' => UserResource::collection($users['data']['data']),
             'meta' => [
-                'total' => $users['total'],
+                'total' => $users['data']['total'],
             ],
         ]);
     }
