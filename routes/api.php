@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RoleController;
@@ -53,6 +54,13 @@ Route::prefix('v1')->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+    // Carts endpoint
+    Route::get('/carts', [CartController::class, 'index']);
+    Route::get('/carts/{id}', [CartController::class, 'show']);
+    Route::post('/carts', [CartController::class, 'store']);
+    Route::put('/carts', [CartController::class, 'update']);
+    Route::delete('/carts/{id}', [CartController::class, 'destroy']);
 });
 
 Route::get('/', function () {

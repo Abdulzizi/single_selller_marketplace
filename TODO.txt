@@ -7,22 +7,22 @@
 - [x] Implement CRUD for categories
 
 ## Products
-- [ ] Create model, migration, and seeder for products
-- [ ] Create controller, request, and resource for products
-- [ ] Define routes for products
-- [ ] Implement CRUD for products
+- [x] Create model, migration, and seeder for products
+- [x] Create controller, request, and resource for products
+- [x] Define routes for products
+- [x] Implement CRUD for products
 
 ## Products Details
-- [ ] Create model, migration, and seeder for products details
-- [ ] Create controller, request, and resource for products details
-- [ ] Define routes for products details
-- [ ] Implement CRUD for products details
+- [x] Create model, migration, and seeder for products details
+- [x] Create controller, request, and resource for products details
+- [x] Define routes for products details
+- [x] Implement CRUD for products details
 
 ## Carts
 - [ ] Create model, migration, and seeder for carts
-- [ ] Create controller, request, and resource for carts
-- [ ] Define routes for carts
-- [ ] Implement CRUD for carts
+- [x] Create controller, request, and resource for carts
+- [x] Define routes for carts
+- [x] Implement CRUD for carts
 
 ## Orders
 - [ ] Create model, migration, and seeder for orders

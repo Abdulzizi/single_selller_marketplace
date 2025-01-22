@@ -5,14 +5,12 @@ namespace App\Http\Controllers\api;
 use App\Helpers\Category\CategoryHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CategoryRequest;
-use App\Http\Resources\Category\CategoryCollection;
 use App\Http\Resources\Category\CategoryResource;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     private $categoryHelper;
-
 
     public function __construct()
     {

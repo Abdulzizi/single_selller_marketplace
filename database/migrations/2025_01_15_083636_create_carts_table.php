@@ -32,9 +32,6 @@ return new class extends Migration
             $table->index('user_id');
             $table->index('product_id');
             $table->index('product_detail_id');
-
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 
