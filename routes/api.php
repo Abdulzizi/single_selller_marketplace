@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SiteController;
@@ -61,6 +62,13 @@ Route::prefix('v1')->group(function () {
     Route::post('/carts', [CartController::class, 'store']);
     Route::put('/carts', [CartController::class, 'update']);
     Route::delete('/carts/{id}', [CartController::class, 'destroy']);
+
+    // Orders endpoint
+    Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/orders/{id}', [OrderController::class, 'show']);
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::put('/orders', [OrderController::class, 'update']);
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
 });
 
 Route::get('/', function () {

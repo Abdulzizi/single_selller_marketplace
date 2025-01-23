@@ -82,7 +82,7 @@ class ProductModel extends Model implements CrudInterface
         }
 
         if (!empty($filter['category_id'])) {
-            $products->where('product_id', 'LIKE', '%' . $filter['product_id'] . '%');
+            $products->where('category_id', 'LIKE', '%' . $filter['category_id'] . '%');
         }
 
         if ($filter['is_available'] != '') {
