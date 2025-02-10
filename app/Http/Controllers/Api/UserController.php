@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\User\UserHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -99,25 +99,16 @@ class UserController extends Controller
         return response()->success(new UserResource($user['data']), 'User berhasil ditambahkan');
     }
 
-    /**
-     * Mengubah data user di tabel m_user
-     *
-     * @author Wahyu Agung <wahyuagung26@email.com>
-     */
-    public function update(UserRequest $request, $id)
+    public function update(userRequest $request)
     {
-        /**
-         * Menampilkan pesan error ketika validasi gagal
-         * pengaturan validasi bisa dilihat pada class app/Http/request/User/UpdateRequest
-         */
         if (isset($request->validator) && $request->validator->fails()) {
             return response()->failed($request->validator->errors());
         }
 
-        $payload = $request->only(['email', 'name', 'password', 'photo', 'phone_number', 'user_roles_id']);
-        $user = $this->userHelper->update($payload, $id ?? 0);
+        $payload = $request->only(['email', 'name', 'password', 'id', 'photo', 'user_roles_id']);
+        $user = $this->userHelper->update($payload, $payload['id']);
 
-        if (! $user['status']) {
+        if (!$user['status']) {
             return response()->failed($user['error']);
         }
 

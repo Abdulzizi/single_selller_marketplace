@@ -97,6 +97,23 @@ class ProductHelper extends Venturo
         ];
     }
 
+
+    public function getBySlug(string $slug): array
+    {
+        $product = $this->productModel->where('slug', $slug)->first();
+        if (empty($product)) {
+            return [
+                'status' => false,
+                'data' => null
+            ];
+        }
+
+        return [
+            'status' => true,
+            'data' => $product
+        ];
+    }
+
     public function update(array $payload): array
     {
         try {

@@ -61,6 +61,5 @@ class AuthController extends Controller
         }
 
         return response()->success([], 'Logout Success !');
-
     }
 }

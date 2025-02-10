@@ -14,7 +14,7 @@ class ProductDetailSeeder extends Seeder
      */
     public function run(): void
     {
-        $products = DB::table('products')->pluck('id', 'slug'); // Fetch products dynamically
+        $products = DB::table('products')->pluck('id', 'slug');
 
         $details = [
             [
@@ -37,6 +37,6 @@ class ProductDetailSeeder extends Seeder
             ],
         ];
 
-        \App\Models\ProductDetailModel::insert($details);
+        DB::table('product_details')->insert($details);
     }
 }

@@ -14,7 +14,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = DB::table('categories')->pluck('id', 'slug'); // Fetch categories dynamically
+        $categories = DB::table('categories')->pluck('id', 'slug');
 
         $products = [
             [
@@ -24,8 +24,7 @@ class ProductSeeder extends Seeder
                 'slug' => 'laptop-asus',
                 'description' => 'Laptop Asus Core i5 16GB RAM 512GB SSD',
                 'price' => 13500000,
-                'stock' => 10,
-                'weight' => 2,
+                'is_available' => 1,
                 'created_by' => 1,
                 'updated_by' => 1,
             ],
@@ -34,15 +33,14 @@ class ProductSeeder extends Seeder
                 'category_id' => $categories['accessories'] ?? null,
                 'name' => 'Mouse Logitech',
                 'slug' => 'mouse-logitech',
-                'description' => 'Mouse Logitech G502',
+                'description' => 'Mouse Logitech G502 with advanced features',
                 'price' => 150000,
-                'stock' => 50,
-                'weight' => 0.5,
+                'is_available' => 1,
                 'created_by' => 1,
                 'updated_by' => 1,
             ],
         ];
 
-        \App\Models\ProductModel::insert($products);
+        DB::table('products')->insert($products);
     }
 }

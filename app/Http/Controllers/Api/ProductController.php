@@ -73,6 +73,17 @@ class ProductController extends Controller
         return response()->success(new ProductResource($product['data']));
     }
 
+    public function showBySlug(string $slug)
+    {
+        $product = $this->productHelper->getBySlug($slug);
+
+        if (!($product['status'])) {
+            return response()->failed(['Data product tidak ditemukan'], 404);
+        }
+
+        return response()->success(new ProductResource($product['data']));
+    }
+
     public function update(ProductRequest $request)
     {
         if (isset($request->validator) && $request->validator->fails()) {

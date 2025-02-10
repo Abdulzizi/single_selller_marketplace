@@ -19,13 +19,13 @@
 - [x] Implement CRUD for products details
 
 ## Carts
-- [ ] Create model, migration, and seeder for carts
+- [x] Create model, migration, and seeder for carts
 - [x] Create controller, request, and resource for carts
 - [x] Define routes for carts
 - [x] Implement CRUD for carts
 
 ## Orders
 - [ ] Create model, migration, and seeder for orders
-- [ ] Create controller, request, and resource for orders
-- [ ] Define routes for orders
-- [ ] Implement CRUD for orders
+- [x] Create controller, request, and resource for orders
+- [x] Define routes for orders
+- [x] Implement CRUD for orders

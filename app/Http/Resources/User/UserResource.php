@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -19,6 +19,7 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'user_roles_id' => (string) $this->user_roles_id,
+            'user_role_name' => isset($this->role->name) ? $this->role->name : '',
             'name' => $this->name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,

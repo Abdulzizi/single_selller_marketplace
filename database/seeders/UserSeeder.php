@@ -33,9 +33,18 @@ class UserSeeder extends Seeder
             'updated_security' => date('Y-m-d H:i:s'),
         ]);
 
+        DB::table('users')->insert([
+            'id' => '9c6a6f4d-51e4-45a8-8a7c-5a9c9d6c2c3c',
+            'user_roles_id' => 'c3b33c4a-8f7c-49c4-aece-5b4f6f4a5f5e',
+            'name' => 'Customer',
+            'email' => 'customer@landa.co.id',
+            'password' => Hash::make('devGanteng'),
+            'updated_security' => date('Y-m-d H:i:s'),
+        ]);
+
         DB::table('user_roles')->insert([
             'id' => 'f9e49521-4a4a-4b3b-b0ca-73f36c8aef47',
-            'name' => 'Admin',
+            'name' => 'Super Admin',
             'access' => json_encode([
                 'user' => [
                     'view' => true,
@@ -54,7 +63,7 @@ class UserSeeder extends Seeder
 
         DB::table('user_roles')->insert([
             'id' => '75d055eb-f4a4-4f47-acbd-d202b19a71fc',
-            'name' => 'Staff',
+            'name' => 'Seller',
             'access' => json_encode([
                 'user' => [
                     'view' => true,
@@ -64,6 +73,25 @@ class UserSeeder extends Seeder
                 ],
                 'roles' => [
                     'view' => true,
+                    'create' => false,
+                    'update' => false,
+                    'delete' => false,
+                ],
+            ]),
+        ]);
+
+        DB::table('user_roles')->insert([
+            'id' => 'c3b33c4a-8f7c-49c4-aece-5b4f6f4a5f5e',
+            'name' => 'Client',
+            'access' => json_encode([
+                'user' => [
+                    'view' => false,
+                    'create' => false,
+                    'update' => false,
+                    'delete' => false,
+                ],
+                'roles' => [
+                    'view' => false,
                     'create' => false,
                     'update' => false,
                     'delete' => false,

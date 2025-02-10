@@ -32,7 +32,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/users', [UserController::class, 'index']); //->middleware(['auth.api', 'role:user.view']);
     Route::get('/users/{id}', [UserController::class, 'show']); //->middleware(['auth.api', 'role:user.view']);
     Route::post('/users', [UserController::class, 'store']); //->middleware(['auth.api', 'role:user.create|roles.view']);
-    Route::put('/users/{id}', [UserController::class, 'update']); //->middleware(['auth.api', 'role:user.update||roles.view']);
+    Route::put('/users', [UserController::class, 'update']); //->middleware(['auth.api', 'role:user.update||roles.view']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']); //->middleware(['auth.api', 'role:user.delete']);
 
     // Roles
@@ -52,6 +52,8 @@ Route::prefix('v1')->group(function () {
     // Products endpoint
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
+    Route::get('/product/{slug}', [ProductController::class, 'showBySlug']);
+
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
