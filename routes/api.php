@@ -21,10 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     Route::get('/', [SiteController::class, 'index']);
 
-    Route::post('/auth/login', [AuthController::class, 'login']); //->middleware(['signature']);
+    Route::post('/auth/login', [AuthController::class, 'login'])->middleware(['throttle:5,30']); //->middleware(['signature']);
     Route::post('/auth/logout', [AuthController::class, 'logout']); //->middleware(['signature']);
     Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware(['auth.api']);
 
