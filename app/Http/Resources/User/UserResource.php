@@ -23,7 +23,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'phone_number' => $this->phone_number,
-            'photo_url' => ! empty($this->photo) ? Storage::disk('public')->url($this->photo) : Storage::disk('public')->url('../assets/img/no-image.png'),
+            'photo_url' => ! empty($this->photo) ? $this->photo : asset('assets/img/no-image.png'),
             'updated_security' => $this->updated_security,
             'access' => isset($this->role->access) ? json_decode($this->role->access) : [],
         ];

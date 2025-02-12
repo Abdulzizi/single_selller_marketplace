@@ -26,8 +26,9 @@ class ProductResource extends JsonResource
             'description' => $this->description,
 
             // (ambil photo desktop dan mobile)
-            'photo_desktop_url' => !empty($this->photo_desktop) ? Storage::disk('public')->url($this->photo_desktop) : Storage::disk('public')->url('../assets/img/no-image.png'),
-            'photo_mobile_url' => !empty($this->photo_mobile) ? Storage::disk('public')->url($this->photo_mobile) : Storage::disk('public')->url('../assets/img/no-image.png'),
+
+            'photo_desktop_url' => !empty($this->photo_desktop) ? $this->photo_desktop : asset('assets/img/no-image.png'),
+            'photo_mobile_url' => !empty($this->photo_mobile) ? $this->photo_mobile : asset('assets/img/no-image.png'),
 
             'details' => ProductDetailResource::collection($this->details),
         ];

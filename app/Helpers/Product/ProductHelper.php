@@ -5,6 +5,7 @@ namespace App\Helpers\Product;
 use App\Helpers\Venturo;
 use App\Models\ProductDetailModel;
 use App\Models\ProductModel;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Throwable;
 
 class ProductHelper extends Venturo
@@ -180,18 +181,18 @@ class ProductHelper extends Venturo
     {
         // Desktop
         if (!empty($payload['photo_desktop'])) {
-            $fileName = $this->generateFileName($payload['photo_desktop'], 'PRODUCT_DESKTOP_' . date('Ymdhis'));
-            $photo = $payload['photo_desktop']->storeAs(self::PRODUCT_PHOTO_DIRECTORY, $fileName, 'public');
-            $payload['photo_desktop'] = $photo;
+            $uploadedFileUrl = Cloudinary::upload($payload['photo_desktop']->getRealPath())->getSecurePath();
+
+            $payload['photo_desktop'] = $uploadedFileUrl;
         } else {
             unset($payload['photo_desktop']);
         }
 
         // Mobile
         if (!empty($payload['photo_mobile'])) {
-            $fileName = $this->generateFileName($payload['photo_mobile'], 'PRODUCT_MOBILE_' . date('Ymdhis'));
-            $photo = $payload['photo_mobile']->storeAs(self::PRODUCT_PHOTO_DIRECTORY, $fileName, 'public');
-            $payload['photo_mobile'] = $photo;
+            $uploadedFileUrl = Cloudinary::upload($payload['photo_mobile']->getRealPath())->getSecurePath();
+
+            $payload['photo_mobile'] = $uploadedFileUrl;
         } else {
             unset($payload['photo_mobile']);
         }

@@ -31,9 +31,6 @@ return new class extends Migration
 
             $table->index('order_id');
             $table->index('product_id');
-
-            // $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-            // $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

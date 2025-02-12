@@ -53,7 +53,7 @@ class CartModel extends Model implements CrudInterface
     public function getAll(array $filter, int $page = 1, int $itemPerPage = 0, string $sort = '')
     {
         $skip = ($page * $itemPerPage) - $itemPerPage;
-        $carts = $this->query();
+        $carts = $this->query()->with(['product', 'productDetail']);
 
         if (!empty($filter['user_id'])) {
             $carts->where('user_id', 'LIKE', '%' . $filter['user_id'] . '%');

@@ -81,12 +81,20 @@ class ProductModel extends Model implements CrudInterface
             $products->where('name', 'LIKE', '%' . $filter['name'] . '%');
         }
 
-        if (!empty($filter['category_id'])) {
-            $products->where('category_id', 'LIKE', '%' . $filter['category_id'] . '%');
+        if (!empty($filter['product_category_id'])) {
+            $products->whereIn('category_id', $filter['product_category_id']);
         }
 
         if ($filter['is_available'] != '') {
             $products->where('is_available', '=', $filter['is_available']);
+        }
+
+        if (!empty($filter['min_price'])) {
+            $products->where('price', '>=', $filter['min_price']);
+        }
+
+        if (!empty($filter['max_price'])) {
+            $products->where('price', '<=', $filter['max_price']);
         }
 
         $total = $products->count();

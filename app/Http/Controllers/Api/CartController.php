@@ -68,7 +68,7 @@ class CartController extends Controller
             return response()->failed($request->validator->errors());
         }
 
-        $payload = $request->only(['name', 'id']);
+        $payload = $request->only(['product_id', 'id', 'quantity']);
         $cart = $this->cartHelper->update($payload, $payload['id'] ?? 0);
 
         if (!$cart['status']) {

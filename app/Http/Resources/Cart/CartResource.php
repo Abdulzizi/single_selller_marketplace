@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\Cart;
 
+use App\Http\Resources\Product\ProductDetailResource;
+use App\Http\Resources\Product\ProductResource;
+use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,8 +23,9 @@ class CartResource extends JsonResource
             'product_id' => $this->product_id,
             'product_detail_id' => $this->product_detail_id,
             'quantity' => $this->quantity,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            // 'user' => new UserResource($this->whenLoaded('user')),
+            'product_detail' => new ProductDetailResource($this->whenLoaded('productDetail')),
+            'product' => new ProductResource($this->whenLoaded('product')),
         ];
     }
 }

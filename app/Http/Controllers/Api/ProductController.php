@@ -20,8 +20,10 @@ class ProductController extends Controller
     {
         $filter = [
             'name' => $request->name ?? '',
-            'product_category_id' => $request->product_category_id ?? '',
+            'product_category_id' => !empty($request->product_category_id) ? explode(",", $request->product_category_id) : [],
             'is_available' => isset($request->is_available) ? $request->is_available : '',
+            'min_price' => $request->min_price ?? '',
+            'max_price' => $request->max_price ?? '',
         ];
         $products = $this->productHelper->getAll($filter, $request->page ?? 1, $request->per_page ?? 25, $request->sort ?? '');
 

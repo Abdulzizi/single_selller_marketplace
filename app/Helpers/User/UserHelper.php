@@ -4,6 +4,7 @@ namespace App\Helpers\User;
 
 use App\Helpers\Venturo;
 use App\Models\UserModel;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
 
@@ -164,9 +165,14 @@ class UserHelper extends Venturo
          * Jika dalam payload terdapat base64 foto, maka Upload foto ke folder public/uploads/foto-user
          */
         if (! empty($payload['photo'])) {
-            $fileName = $this->generateFileName($payload['photo'], 'USER_'.date('Ymdhis'));
-            $photo = $payload['photo']->storeAs(self::USER_PHOTO_DIRECTORY, $fileName, 'public');
-            $payload['photo'] = $photo;
+            $uploadedFileUrl = Cloudinary::upload($payload['photo']->getRealPath())->getSecurePath();
+
+            // $fileName = $this->generateFileName($payload['photo'], 'USER_' . date('Ymdhis'));
+
+            // Upload ke foto-user local
+            // $payload['photo']->storeAs(self::USER_PHOTO_DIRECTORY, $fileName, 'public');
+
+            $payload['photo'] = $uploadedFileUrl;
         } else {
             unset($payload['photo']);
         }
