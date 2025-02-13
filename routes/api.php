@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SiteController;
 use App\Http\Controllers\Api\UserController;
+
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,6 +73,9 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);
     Route::put('/orders', [OrderController::class, 'update']);
     Route::delete('/orders/{id}', [OrderController::class, 'destroy']);
+
+    // Send email
+    Route::get('/send-email', [MailController::class, 'sendEmail']);
 });
 
 Route::get('/', function () {
