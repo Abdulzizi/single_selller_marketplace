@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.9",
         "mongodb/laravel-mongodb": "^5.1",
         "php-open-source-saver/jwt-auth": "^2.2",
+        "predis/predis": "^2.3",
         "protonemedia/laravel-mixins": "^3.7",
         "ramsey/uuid": "^4.7",
         "symfony/mailer": "^7.2"
