@@ -141,7 +141,7 @@ class OrderHelper extends Venturo
     }
 
     // Private method untuk insert / update detail product
-    private function insertUpdateDetail(array $details, string $productId)
+    private function insertUpdateDetail(array $details, string $orderId)
     {
         if (empty($details)) {
             return false;
@@ -150,7 +150,7 @@ class OrderHelper extends Venturo
         foreach ($details as $val) {
             // Insert
             if (isset($val['is_added']) && $val['is_added']) {
-                $val['product_id'] = $productId;
+                $val['order_id'] = $orderId;
                 $this->orderDetailModel->store($val);
             }
 

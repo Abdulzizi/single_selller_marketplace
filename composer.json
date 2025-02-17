@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "cloudinary-labs/cloudinary-laravel": "^2.2",
+        "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^11.0",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
@@ -15,6 +16,7 @@
         "predis/predis": "^2.3",
         "protonemedia/laravel-mixins": "^3.7",
         "ramsey/uuid": "^4.7",
+        "spatie/db-dumper": "^3.8",
         "symfony/mailer": "^7.2"
     },
     "require-dev": {

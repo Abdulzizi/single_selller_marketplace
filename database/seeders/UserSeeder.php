@@ -18,26 +18,26 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'id' => '9ad1d6ab-e234-433c-871b-73a8b7ff3a61',
             'user_roles_id' => 'f9e49521-4a4a-4b3b-b0ca-73f36c8aef47',
-            'name' => 'Wahyu Agung',
-            'email' => 'agung@landa.co.id',
+            'name' => 'Abdul admin',
+            'email' => 'jawadazizi052@gmail.com',
             'password' => Hash::make('devGanteng'),
             'updated_security' => date('Y-m-d H:i:s'),
         ]);
 
         DB::table('users')->insert([
             'id' => '375dfe0f-6ccf-4b78-b38f-ed17eb50d0c3',
-            'user_roles_id' => '75d055eb-f4a4-4f47-acbd-d202b19a71fc',
-            'name' => 'Wahyu',
-            'email' => 'wahyuagung26@gmail.com',
+            'user_roles_id' => 'c3b33c4a-8f7c-49c4-aece-5b4f6f4a5f5e',
+            'name' => 'Admin client',
+            'email' => 'azizijamal005@gmail.com',
             'password' => Hash::make('devGanteng'),
             'updated_security' => date('Y-m-d H:i:s'),
         ]);
 
         DB::table('users')->insert([
             'id' => '9c6a6f4d-51e4-45a8-8a7c-5a9c9d6c2c3c',
-            'user_roles_id' => 'c3b33c4a-8f7c-49c4-aece-5b4f6f4a5f5e',
-            'name' => 'Customer',
-            'email' => 'customer@landa.co.id',
+            'user_roles_id' => '75d055eb-f4a4-4f47-acbd-d202b19a71fc',
+            'name' => 'Seller',
+            'email' => 'seller@landa.co.id',
             'password' => Hash::make('devGanteng'),
             'updated_security' => date('Y-m-d H:i:s'),
         ]);
