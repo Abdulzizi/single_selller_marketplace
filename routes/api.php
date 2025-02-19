@@ -8,7 +8,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\SiteController;
 use App\Http\Controllers\Api\UserController;
-
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 
@@ -76,6 +76,10 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
 
     // Send email
     Route::get('/send-email', [MailController::class, 'sendEmail']);
+
+    // Forgot password
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
+    Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 });
 
 Route::get('/', function () {

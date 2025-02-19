@@ -7,6 +7,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/email-test', function () {
+    Mail::raw('This is a test email.', function ($message) {
+        $message->to('jawadazizi052@gmail.com')
+            ->subject('Test Email');
+    });
+});
+
 Route::get('/send-bulk-email', function () {
     $details = [
         'emails' => [
@@ -21,3 +28,6 @@ Route::get('/send-bulk-email', function () {
 
     return response()->json(['message' => 'Bulk email job dispatched via Redis!']);
 });
+
+// Reset Password
+Route::view('/reset-password', 'auth.reset-password');
