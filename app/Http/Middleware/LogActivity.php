@@ -35,13 +35,13 @@ class LogActivity
         Log::channel('daily')->info('Activity Log:', $logData);
 
         // Simpan ke MongoDB jika koneksi tersedia
-        // try {
-        //     if (DB::connection('mongodb')) {
-        //         ActivityLog::create($logData);
-        //     }
-        // } catch (\Exception $e) {
-        //     Log::error('MongoDB Connection Error: ' . $e->getMessage());
-        // }
+        try {
+            if (DB::connection('mongodb')) {
+                ActivityLog::create($logData);
+            }
+        } catch (\Exception $e) {
+            Log::error('MongoDB Connection Error: ' . $e->getMessage());
+        }
 
         return $response;
     }
