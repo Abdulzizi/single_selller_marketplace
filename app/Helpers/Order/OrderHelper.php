@@ -128,6 +128,30 @@ class OrderHelper extends Venturo
         }
     }
 
+    public function updateStatus(array $payload): array
+    {
+        try {
+            $this->beginTransaction();
+
+            $this->orderModel->edit(['status' => $payload['status']], $payload['id']);
+
+            $order = $this->getById($payload['id']);
+            $this->commitTransaction();
+
+            return [
+                'status' => true,
+                'data' => $order['data']
+            ];
+        } catch (Throwable $th) {
+            $this->rollbackTransaction();
+
+            return [
+                'status' => false,
+                'error' => $th->getMessage()
+            ];
+        }
+    }
+
     // Private method untuk delete detail product
     private function deleteDetail(array $details)
     {

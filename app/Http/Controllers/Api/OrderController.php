@@ -86,46 +86,33 @@ class OrderController extends Controller
         return response()->success(new OrderResource($order['data']));
     }
 
-    public function update(OrderRequest $request)
+    public function update(Request $request)
     {
         if ($request->validator?->fails()) {
             return response()->failed($request->validator->errors());
         }
 
-        // $payload = $request->only(['id', 'user_id', 'product_detail_id', 'status', 'details', 'details_deleted']);
+        $payload = $request->only(['id', 'status', 'user_id', 'product_detail_id', 'details', 'details_deleted']);
 
-        // Remove status
-        $payload = $request->only(['id', 'order_id', 'product_detail_id', 'details', 'details_deleted']);
+        // Validate order existence
         $existingOrder = $this->orderHelper->getById($payload['id']);
-
         if (!$existingOrder['status']) {
             return response()->failed(['Order tidak ditemukan'], 404);
         }
 
-        $totalPrice = 0;
-        foreach ($payload['details'] as &$detail) {
-            $productResponse = $this->productHelper->getById($detail['product_id']);
-
-            // Cek apakah ada product
-            if (!$productResponse['status'] || !isset($productResponse['data'])) {
-                return response()->failed(["Product with ID {$detail['product_id']} not found"]);
-            }
-
-            $product = $productResponse['data'];
-
-            $detail['price'] = $product['price'];
-            $detail['total'] = $detail['price'] * ($detail['quantity'] ?? 1);
-            $totalPrice += $detail['total'];
+        if (isset($payload['status']) && count($payload) === 2) {
+            // Case 1: Status-Only Update
+            $order = $this->orderHelper->updateStatus($payload);
+        } else {
+            // Case 2: Full Update
+            $order = $this->orderHelper->update($payload);
         }
-
-        $payload['total_price'] = $totalPrice;
-        $order = $this->orderHelper->update($payload);
 
         if (!$order['status']) {
             return response()->failed($order['error']);
         }
 
-        return response()->success(new OrderResource($order['data']), 'Order berhasil diubah');
+        return response()->success(new OrderResource($order['data']), 'Order berhasil diperbarui');
     }
 
     public function destroy(string $id)
