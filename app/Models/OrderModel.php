@@ -21,6 +21,17 @@ class OrderModel extends Model implements CrudInterface
         'product_detail_id',
         'total_price',
         'status',
+        'street',
+        'apartment',
+        'city',
+        'postcode',
+        'country',
+        'payment_method',
+        'payment_details',
+    ];
+
+    protected $casts = [
+        'payment_details' => 'array',
     ];
 
     protected $table = 'orders';
@@ -61,6 +72,10 @@ class OrderModel extends Model implements CrudInterface
     {
         $skip = ($page * $itemPerPage) - $itemPerPage;
         $orders = $this->query();
+
+        if (!empty($filter['id'])) {
+            $orders->where('id', 'LIKE', '%' . $filter['id'] . '%');
+        }
 
         if (!empty($filter['user_id'])) {
             $orders->where('user_id', 'LIKE', '%' . $filter['user_id'] . '%');

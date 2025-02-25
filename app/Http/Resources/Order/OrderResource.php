@@ -23,6 +23,17 @@ class OrderResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
+            // New Address Details
+            'street'          => $this->street,
+            'apartment'       => $this->apartment,
+            'city'            => $this->city,
+            'postcode'        => $this->postcode,
+            'country'         => $this->country,
+
+            // Payment Information
+            'payment_method'  => $this->payment_method,
+            'payment_details' => $this->payment_details,
+
             // Include order details
             'details' => OrderDetailResource::collection($this->details),
         ];

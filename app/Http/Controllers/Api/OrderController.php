@@ -22,6 +22,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $filter = [
+            'id' => $request->id ?? '',
             'user_id' => $request->user_id ?? '',
             'product_detail_id' => $request->product_detail_id ?? '',
             'status' => isset($request->status) ? $request->status : '',
@@ -45,13 +46,25 @@ class OrderController extends Controller
         // $payload = $request->only(['id', 'user_id', 'product_detail_id', 'status', 'details', 'details_deleted']);
 
         // Remove status
-        $payload = $request->only(['user_id', 'product_detail_id', 'total_price', 'details', 'details_deleted']);
+        $payload = $request->only([
+            'user_id',
+            'product_detail_id',
+            'total_price',
+            'details',
+            'details_deleted',
+            'street',
+            'apartment',
+            'city',
+            'postcode',
+            'country',
+            'payment_method',
+            'payment_details'
+        ]);
+
         $totalPrice = 0;
 
         foreach ($payload['details'] as &$detail) {
             $productResponse = $this->productHelper->getById($detail['product_id']);
-
-            // dd($productResponse);
 
             // Check apakah ada product
             if (!$productResponse['status'] || !isset($productResponse['data'])) {
