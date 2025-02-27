@@ -31,8 +31,8 @@ class OrderRequest extends FormRequest
             'user_id.exists' => 'User ID must exist in the users table.',
 
             // Total price
-            'total_price.required' => 'Total Price is required.',
-            'total_price.numeric' => 'Total Price must be a number.',
+            // 'total_price.required' => 'Total Price is required.',
+            // 'total_price.numeric' => 'Total Price must be a number.',
 
             // Address fields
             'street.string' => 'Street must be a valid string.',
@@ -67,7 +67,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'user_id'           => 'required|uuid|exists:users,id',
-            'total_price'       => 'required|numeric',
+            // 'total_price'       => 'required|numeric',
             'street'            => 'nullable|string|max:255',
             'apartment'         => 'nullable|string|max:255',
             'city'              => 'nullable|string|max:255',
@@ -87,7 +87,7 @@ class OrderRequest extends FormRequest
             'id'                => 'required|uuid|exists:orders,id',
             'user_id'           => 'required|uuid|exists:users,id',
             // When updating, total_price is calculated by the system, so it's optional here.
-            'total_price'       => 'nullable|numeric',
+            // 'total_price'       => 'nullable|numeric',
             'street'            => 'nullable|string|max:255',
             'apartment'         => 'nullable|string|max:255',
             'city'              => 'nullable|string|max:255',
@@ -105,7 +105,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'user_id'           => 'User ID',
-            'total_price'       => 'Total Price',
+            // 'total_price'       => 'Total Price',
             'status'            => 'Order Status',
             'details'           => 'Order Details',
             'street'            => 'Street',

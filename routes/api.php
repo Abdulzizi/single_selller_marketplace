@@ -31,7 +31,7 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware(['auth.api']);
 
     // Users
-    Route::get('/users', [UserController::class, 'index']); //->middleware(['auth.api', 'role:user.view']);
+    Route::get('/users', [UserController::class, 'index']); //->middleware(['auth.api', 'refresh.token', 'role:user.view']);
     Route::get('/users/{id}', [UserController::class, 'show']); //->middleware(['auth.api', 'role:user.view']);
     Route::post('/users', [UserController::class, 'store']); //->middleware(['auth.api', 'role:user.create|roles.view']);
     Route::put('/users', [UserController::class, 'update']); //->middleware(['auth.api', 'role:user.update||roles.view']);

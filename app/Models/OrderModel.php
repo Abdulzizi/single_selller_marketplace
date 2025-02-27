@@ -64,6 +64,8 @@ class OrderModel extends Model implements CrudInterface
 
     public function store(array $payload)
     {
+        // dd($payload);
+
         return $this->create($payload);
     }
 

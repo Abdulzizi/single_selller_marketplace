@@ -46,35 +46,34 @@ class OrderController extends Controller
         // $payload = $request->only(['id', 'user_id', 'product_detail_id', 'status', 'details', 'details_deleted']);
 
         // Remove status
+        $payload = $request->only([
+            'user_id',
+            'product_detail_id',
+            // 'total_price',
+            'details',
+            'details_deleted',
+            'street',
+            'apartment',
+            'city',
+            'postcode',
+            'country',
+            'payment_method',
+            'payment_details'
+        ]);
+
         // $payload = $request->only([
         //     'user_id',
         //     'product_detail_id',
         //     'total_price',
         //     'details',
         //     'details_deleted',
-        //     'street',
-        //     'apartment',
-        //     'city',
-        //     'postcode',
-        //     'country',
         //     'payment_method',
         //     'payment_details'
         // ]);
 
-        $payload = $request->only([
-            'user_id',
-            'product_detail_id',
-            'total_price',
-            'details',
-            'details_deleted',
-            'delivery_details',
-            'payment_method',
-            'payment_details'
-        ]);
-
-        if ($request->has('delivery_details')) {
-            $payload = array_merge($payload, $request->input('delivery_details'));
-        }
+        // if ($request->has('delivery_details')) {
+        //     $payload = array_merge($payload, $request->input('delivery_details'));
+        // }
 
         $totalPrice = 0;
 
@@ -94,6 +93,8 @@ class OrderController extends Controller
         }
 
         $payload['total_price'] = $totalPrice;
+
+        // dd($payload);
         $orders = $this->orderHelper->create($payload);
 
         if (!$orders['status']) {
