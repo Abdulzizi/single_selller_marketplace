@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientViews\LandingPageController;
 use App\Jobs\SendBulkEmailJob;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,6 @@ Route::get('/send-bulk-email', function () {
 
 // Reset Password
 Route::view('/reset-password', 'auth.reset-password');
+
+// Send view
+Route::get('/products', [LandingPageController::class, 'index']);
