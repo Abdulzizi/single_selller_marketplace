@@ -85,7 +85,7 @@ class ProductModel extends Model implements CrudInterface
             $products->whereIn('category_id', $filter['product_category_id']);
         }
 
-        if ($filter['is_available'] != '') {
+        if (!empty($filter['is_available'])) {
             $products->where('is_available', '=', $filter['is_available']);
         }
 

@@ -59,56 +59,10 @@
                 <a href="/products" class="mt-6 text-sm text-muted hover:underline"><i>Reset Filter</i></a>
             </div>
 
-
-            <!-- Product List Wrapper -->
             <div class="col-span-3 bg-white p-8 rounded-lg shadow-md">
-                <h3 class="text-xl font-bold mb-4 text-gray-900">Available Products</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <!-- Product 1 -->
-                    <div class="bg-white border rounded-lg shadow-md p-5 col-span-1">
-                        <img class="w-full h-48 object-cover rounded-md" src="/assets/img/product-1.jpg" alt="Product 1">
-                        <h5 class="text-xl font-bold mt-4">Smartphone X</h5>
-                        <p class="text-gray-700 mt-1">High-end smartphone with great features.</p>
-                        <p class="text-blue-600 font-bold mt-2">$699</p>
-                    </div>
-                    <!-- Product 2 -->
-                    <div class="bg-white border rounded-lg shadow-md p-5 col-span-1">
-                        <img class="w-full h-48 object-cover rounded-md" src="/assets/img/product-2.jpg" alt="Product 2">
-                        <h5 class="text-xl font-bold mt-4">Wireless Headphones</h5>
-                        <p class="text-gray-700 mt-1">Noise-canceling over-ear headphones.</p>
-                        <p class="text-blue-600 font-bold mt-2">$199</p>
-                    </div>
-                    <!-- Product 3 -->
-                    <div class="bg-white border rounded-lg shadow-md p-5 col-span-1">
-                        <img class="w-full h-48 object-cover rounded-md" src="/assets/img/product-3.jpg" alt="Product 3">
-                        <h5 class="text-xl font-bold mt-4">Gaming Laptop</h5>
-                        <p class="text-gray-700 mt-1">Powerful gaming laptop with RTX graphics.</p>
-                        <p class="text-blue-600 font-bold mt-2">$1299</p>
-                    </div>
-
-                    <!-- Product 1 -->
-                    <div class="bg-white border rounded-lg shadow-md p-5 col-span-1">
-                        <img class="w-full h-48 object-cover rounded-md" src="/assets/img/product-1.jpg" alt="Product 1">
-                        <h5 class="text-xl font-bold mt-4">Smartphone X</h5>
-                        <p class="text-gray-700 mt-1">High-end smartphone with great features.</p>
-                        <p class="text-blue-600 font-bold mt-2">$699</p>
-                    </div>
-                    <!-- Product 2 -->
-                    <div class="bg-white border rounded-lg shadow-md p-5 col-span-1">
-                        <img class="w-full h-48 object-cover rounded-md" src="/assets/img/product-2.jpg" alt="Product 2">
-                        <h5 class="text-xl font-bold mt-4">Wireless Headphones</h5>
-                        <p class="text-gray-700 mt-1">Noise-canceling over-ear headphones.</p>
-                        <p class="text-blue-600 font-bold mt-2">$199</p>
-                    </div>
-                    <!-- Product 3 -->
-                    <div class="bg-white border rounded-lg shadow-md p-5 col-span-1">
-                        <img class="w-full h-48 object-cover rounded-md" src="/assets/img/product-3.jpg" alt="Product 3">
-                        <h5 class="text-xl font-bold mt-4">Gaming Laptop</h5>
-                        <p class="text-gray-700 mt-1">Powerful gaming laptop with RTX graphics.</p>
-                        <p class="text-blue-600 font-bold mt-2">$1299</p>
-                    </div>
-                </div>
+                @include('components.product-grid', ['products' => $products])
             </div>
         </div>
+    </div>
     </div>
 @endsection
