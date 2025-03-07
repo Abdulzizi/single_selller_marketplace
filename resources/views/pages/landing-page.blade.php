@@ -59,7 +59,7 @@
                 <a href="/products" class="mt-6 text-sm text-muted hover:underline"><i>Reset Filter</i></a>
             </div>
 
-            <div class="col-span-3 bg-white p-8 rounded-lg shadow-md">
+            <div class="col-span-3 bg-white p-8 rounded-lg shadow-md flex items-center justify-center flex-col">
                 @include('components.product-grid', ['products' => $products])
             </div>
         </div>

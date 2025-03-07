@@ -23,6 +23,9 @@
     <main class="container mx-auto my-16 px-6">
         @yield('content')
     </main>
+
+    {{-- Scripts --}}
+    @yield('scripts')
 </body>
 
 </html>

@@ -35,3 +35,5 @@ Route::view('/reset-password', 'auth.reset-password');
 
 // Send view
 Route::get('/products', [LandingPageController::class, 'index']);
+
+Route::get('/products/load-more', [LandingPageController::class, 'loadMore'])->name('products.loadMore');
