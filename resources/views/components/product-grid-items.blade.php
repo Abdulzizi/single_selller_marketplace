@@ -11,7 +11,8 @@
             <p class="text-blue-600 font-bold mt-2 text-lg">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
             <p class="text-gray-500 text-sm">{{ $product->category->name }}</p>
         </div>
-        <button class="mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+        <button data-product-id="{{ $product->id }}"
+            class="add-to-cart-btn mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
             Add to Cart
         </button>
     </div>

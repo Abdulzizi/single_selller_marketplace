@@ -5,6 +5,51 @@ document.addEventListener("DOMContentLoaded", function () {
     const loadMoreBtn = document.getElementById("loadMoreBtn");
     const productContainer = document.getElementById("product-container");
 
+    const toggleBtn = document.getElementById("toggleCategories");
+    const hiddenCategories = document.querySelectorAll(".category-item.hidden");
+    let isExpanded = false;
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+
+        addToCartButtons.forEach((button) => {
+            button.addEventListener("click", function () {
+                const productId = this.getAttribute("data-product-id");
+                let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+                const existingItem = cart.find(
+                    (item) => item.product_id == productId
+                );
+
+                if (existingItem) {
+                    existingItem.quantity += 1; // Increase quantity if item exists
+                } else {
+                    cart.push({ product_id: productId, quantity: 1 });
+                }
+
+                localStorage.setItem("cartItems", JSON.stringify(cart));
+
+                // Redirect to login if user is not authenticated
+                window.location.href = "/login";
+            });
+        });
+    });
+
+    toggleBtn.addEventListener("click", function () {
+        if (!isExpanded) {
+            hiddenCategories.forEach((category) =>
+                category.classList.remove("hidden")
+            );
+            toggleBtn.textContent = "Show Less";
+        } else {
+            hiddenCategories.forEach((category) =>
+                category.classList.add("hidden")
+            );
+            toggleBtn.textContent = "Show More";
+        }
+        isExpanded = !isExpanded;
+    });
+
     async function loadProducts() {
         try {
             // Fetch current page and next page at the same time
