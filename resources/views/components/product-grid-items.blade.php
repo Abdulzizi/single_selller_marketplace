@@ -13,7 +13,7 @@
         </div>
         <button data-product-id="{{ $product->id }}"
             class="add-to-cart-btn mt-3 w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
-            Add to Cart
+            <a href="http://localhost:8080/login">Add To Cart</a>
         </button>
     </div>
 @endforeach

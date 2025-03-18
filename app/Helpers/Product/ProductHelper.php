@@ -193,6 +193,8 @@ class ProductHelper extends Venturo
             $uploadedFileUrl = Cloudinary::upload($payload['photo_mobile']->getRealPath())->getSecurePath();
 
             $payload['photo_mobile'] = $uploadedFileUrl;
+
+            // Cloudinary::destroy($payload['photo_desktop']);
         } else {
             unset($payload['photo_mobile']);
         }
