@@ -2,10 +2,13 @@
 
 namespace App\Helpers\User;
 
+use DateTime;
+use Exception;
 use App\Helpers\Venturo;
 use App\Http\Resources\User\UserResource;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException;
 
 /**
  * Helper khusus untuk authentifikasi pengguna
@@ -26,7 +29,7 @@ class AuthHelper extends Venturo
     {
         try {
             $credentials = ['email' => $email, 'password' => $password];
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return [
                     'status' => false,
                     'error' => ['Kombinasi email dan password yang kamu masukkan salah'],
@@ -45,6 +48,40 @@ class AuthHelper extends Venturo
         ];
     }
 
+    public static function refresh($token)
+    {
+        try {
+            $userModel = JWTAuth::parseToken()->authenticate();
+            $userToken = JWTAuth::parseToken()->getPayload()->get('user');
+
+            $updatedDb = new DateTime($userModel['updated_security']);
+            $updatedToken = new DateTime($userToken['updated_security']);
+        } catch (JWTException $e) {
+            if ($e instanceof TokenExpiredException) {
+                $newToken = JWTAuth::refresh($token);
+                $userModel = JWTAuth::parseToken()->authenticate();
+                $userToken = JWTAuth::parseToken()->getPayload()->get('user');
+
+                if (!$newToken) {
+                    return [
+                        'status' => false,
+                        'error' => ['Could not refresh token.'],
+                    ];
+                }
+
+                return [
+                    'status' => true,
+                    'data' => self::createNewToken($newToken),
+                ];
+            } else {
+                return [
+                    'status' => false,
+                    'error' => $e->getMessage(),
+                ];
+            }
+        }
+    }
+
     /**
      * Get the token array structure.
      *
@@ -60,25 +97,13 @@ class AuthHelper extends Venturo
         ];
     }
 
-
-    public static function refresh()
-    {
-        $newToken = JWTAuth::refresh(JWTAuth::getToken());
-
-        return [
-            'access_token' => $newToken,
-            'token_type' => 'bearer',
-            'user' => new UserResource(auth()->user()),
-        ];
-    }
-
     public static function logout()
     {
         try {
             $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
 
             if ($removeToken) {
-                //return response JSON
+                // return response JSON
                 return [
                     'status' => true,
                     'message' => 'Logout Success!',

@@ -5,17 +5,24 @@ namespace App\Http\Middleware;
 use Closure;
 use DateTime;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenInvalidException;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use PHPOpenSourceSaver\JWTAuth\Http\Middleware\BaseMiddleware;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenExpiredException;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenInvalidException;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\TokenBlacklistedException;
 
 class JwtMiddleware extends BaseMiddleware
 {
-    public function handle(Request $request, Closure $next, $roles = '')
+    /**
+     * Middleware untuk validasi token yang dikirim.
+     * Jika user melakukan perubahan email / password yang berhubungan dengan keamanan
+     * maka user tersebut harus login ulang.
+     *
+     * Pengecekannya menggunakan tgl data keamana diubah > tgl keamanan pada token yg disimpan di frontend
+     *
+     * @author Wahyu Agung <wahyuagung26@email.com>
+     */
+    public function handle($request, Closure $next, $roles = '')
     {
         try {
             $userModel = JWTAuth::parseToken()->authenticate();
@@ -24,26 +31,33 @@ class JwtMiddleware extends BaseMiddleware
             $updatedDb = new DateTime($userModel['updated_security']);
             $updatedToken = new DateTime($userToken['updated_security']);
 
+            // Cek jika ada perubahan pengaturan keamanan, user harus login ulang
             if ($updatedDb > $updatedToken) {
-                return response()->json(['message' => 'Terdapat perubahan pengaturan keamanan, silahkan login ulang'], Response::HTTP_FORBIDDEN);
+                return response()->failed(['Terdapat perubahan pengaturan keamanan, silahkan login ulang'], 403);
             }
 
+            /**
+             * Middleware untuk mengecek permission user ketika melakukan request ke salah satu routes
+             * Pada saat membuat sebuah routes, tambahkan hak akses apa yang boleh mengakses endpoint ini
+             *
+             * Contohnya : Route::get('/users', [UserController::class, 'index'])->middleware(['auth.api','role:user_view']);
+             *
+             * Routes di atas hanya dapat diakses jika request dilengkapi dengan token JWT dan user memiliki akses "user_view"
+             */
             if (!empty($roles) && !$userModel->isHasRole($roles)) {
-                return response()->json(['message' => 'Anda tidak memiliki credential untuk mengakses data ini'], Response::HTTP_FORBIDDEN);
+                return response()->failed(['Anda tidak memiliki credential untuk mengakses data ini'], 403);
             }
-        } catch (TokenExpiredException $e) {
-            try {
-                $newToken = JWTAuth::refresh(JWTAuth::getToken());
-
-                // Attach new token in the response header
-                return $next($request)->header('Authorization', 'Bearer ' . $newToken);
-            } catch (JWTException $refreshException) {
-                return response()->json(['message' => 'Token expired, please login again'], Response::HTTP_UNAUTHORIZED);
-            }
-        } catch (TokenInvalidException $e) {
-            return response()->json(['message' => 'Invalid token'], Response::HTTP_FORBIDDEN);
         } catch (Exception $e) {
-            return response()->json(['message' => 'Silahkan login terlebih dahulu. ' . $e->getMessage()], Response::HTTP_FORBIDDEN);
+            if ($e instanceof TokenInvalidException) {
+                return response()->failed(['Token yang anda gunakan tidak valid'], 403);
+            } elseif ($e instanceof TokenExpiredException) {
+                return response()->failed(['Token yang anda gunakan kadaluarsa'], 403);
+            } elseif ($e instanceof TokenBlacklistedException) {
+                return response()->failed(['Token yang anda gunakan telah masuk daftar hitam'], 403);
+            } else {
+                // return response()->failed(['Silahkan login terlebih dahulu. '.$e->getMessage()], 403);
+                return response()->failed(['Silahkan login terlebih dahulu'], 403);
+            }
         }
 
         return $next($request);

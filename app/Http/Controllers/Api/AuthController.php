@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\UserModel;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Mail\ResetPasswordMail;
 use App\Helpers\User\AuthHelper;
+use App\Http\Requests\AuthRequest;
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\AuthRequest;
 use App\Http\Resources\User\UserResource;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -29,11 +37,28 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
         $login = AuthHelper::login($credentials['email'], $credentials['password']);
 
-        if (! $login['status']) {
+        if (!$login['status']) {
             return response()->failed($login['error'], 422);
         }
 
-        return response()->success($login['data']);
+        return response()->success($login['data'], 'Login Success!');
+    }
+
+    public function refresh(Request $request)
+    {
+        $token = $request->bearerToken();
+
+        if (!$token) {
+            return response()->failed(['Token Required'], 401);
+        }
+
+        $refresh = AuthHelper::refresh($token);
+
+        if (!$refresh['status']) {
+            return response()->failed($refresh['error'], 422);
+        }
+
+        return response()->success($refresh['data'], 'Refresh Success!');
     }
 
     /**
@@ -60,6 +85,6 @@ class AuthController extends Controller
             return response()->failed($logout['error'], 422);
         }
 
-        return response()->success([], 'Logout Success !');
+        return response()->success([], 'Logout Success!');
     }
 }

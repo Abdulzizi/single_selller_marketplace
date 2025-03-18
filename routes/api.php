@@ -35,6 +35,8 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{id}', [ProductController::class, 'show']);
     Route::get('/product/{slug}', [ProductController::class, 'showBySlug']);
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/{id}', [CategoryController::class, 'show']);
 
     // Forgot password (public)
     Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
@@ -84,7 +86,6 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     // Send email
     Route::get('/send-email', [MailController::class, 'sendEmail']);
 });
-
 
 Route::get('/', function () {
     return response()->failed(['Endpoint yang anda minta tidak tersedia']);
