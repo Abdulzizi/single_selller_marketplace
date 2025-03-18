@@ -60,6 +60,18 @@ class AuthHelper extends Venturo
         ];
     }
 
+
+    public static function refresh()
+    {
+        $newToken = JWTAuth::refresh(JWTAuth::getToken());
+
+        return [
+            'access_token' => $newToken,
+            'token_type' => 'bearer',
+            'user' => new UserResource(auth()->user()),
+        ];
+    }
+
     public static function logout()
     {
         try {

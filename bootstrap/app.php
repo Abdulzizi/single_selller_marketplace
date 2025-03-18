@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\JwtMiddleware;
-use App\Http\Middleware\LogActivity;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\SignatureMiddleware;
 use Illuminate\Foundation\Application;
@@ -20,7 +19,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth.api' => JwtMiddleware::class,
             'role' => RoleMiddleware::class,
             'signature' => SignatureMiddleware::class,
-            'log.activity' => LogActivity::class,
+
+            'log.activity' => \VPACK\AuditTrail\Middleware\LogActivity::class,
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

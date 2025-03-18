@@ -4,9 +4,11 @@ use App\Http\Controllers\ClientViews\LandingPageController;
 use App\Jobs\SendBulkEmailJob;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [LandingPageController::class, 'index']);
 
 Route::get('/email-test', function () {
     Mail::raw('This is a test email.', function ($message) {
@@ -34,6 +36,6 @@ Route::get('/send-bulk-email', function () {
 Route::view('/reset-password', 'auth.reset-password');
 
 // Send view
-Route::get('/products', [LandingPageController::class, 'index']);
+// Route::get('/products', [LandingPageController::class, 'index']);
 
 Route::get('/products/load-more', [LandingPageController::class, 'loadMore'])->name('products.loadMore');
