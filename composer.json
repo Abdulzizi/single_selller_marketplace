@@ -18,7 +18,8 @@
         "ramsey/uuid": "^4.7",
         "spatie/db-dumper": "^3.8",
         "symfony/mailer": "^7.2",
-        "v-pack/laravel-audit-trail": "^1.0"
+        "v-pack/laravel-audit-trail": "^1.0",
+        "v-pack/laravel-vmail": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

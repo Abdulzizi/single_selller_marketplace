@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
+use VPack\Vmail\Jobs\SendEmailJob;
 
 class SendResetPasswordEmail implements ShouldQueue
 {
@@ -30,8 +31,18 @@ class SendResetPasswordEmail implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle()
     {
-        Mail::to($this->email)->send(new ResetPasswordMail($this->email, $this->token));
+        try {
+            SendEmailJob::dispatch($this->email, 'Reset Password', 'emails.reset-password', [
+                'email' => $this->email,
+                'token' => $this->token,
+                'resetUrl' => url('/reset-password?token=' . $this->token . '&email=' . $this->email),
+            ], []);
+
+            // Fallback to Laravel Mail if VMail fails
+        } catch (\Exception $e) {
+            Mail::to($this->email)->send(new ResetPasswordMail($this->email, $this->token));
+        }
     }
 }
