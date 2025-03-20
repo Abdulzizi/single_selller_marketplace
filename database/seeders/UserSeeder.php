@@ -16,20 +16,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'id' => '9ad1d6ab-e234-433c-871b-73a8b7ff3a61',
-            'user_roles_id' => 'f9e49521-4a4a-4b3b-b0ca-73f36c8aef47',
-            'name' => 'admin1',
-            'email' => 'jawadazizi052@gmail.com',
-            'password' => Hash::make('devGanteng'),
-            'updated_security' => date('Y-m-d H:i:s'),
-        ]);
+        // DB::table('users')->insert([
+        //     'id' => '9ad1d6ab-e234-433c-871b-73a8b7ff3a61',
+        //     'user_roles_id' => 'f9e49521-4a4a-4b3b-b0ca-73f36c8aef47',
+        //     'name' => 'admin',
+        //     'email' => 'jawadazizi052@gmail.com',
+        //     'password' => Hash::make('devGanteng'),
+        //     'updated_security' => date('Y-m-d H:i:s'),
+        // ]);
 
         DB::table('users')->insert([
             'id' => (string) Str::uuid(),
             'user_roles_id' => 'f9e49521-4a4a-4b3b-b0ca-73f36c8aef47',
-            'name' => 'admin2',
-            'email' => 'ad2@ad2.com',
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
             'password' => Hash::make('devGanteng'),
             'updated_security' => date('Y-m-d H:i:s'),
         ]);

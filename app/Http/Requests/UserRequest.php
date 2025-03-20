@@ -56,7 +56,7 @@ class UserRequest extends FormRequest
             'password.required' => 'Kata sandi wajib diisi.',
             'password.min' => 'Kata sandi harus memiliki minimal 6 karakter.',
             'phone_number.numeric' => 'Nomor telepon harus berupa angka.',
-            'user_roles_id.required' => 'Peran pengguna wajib diisi.',
+            // 'user_roles_id.required' => 'Peran pengguna wajib diisi.',
 
             // Update specific fields
             'password.nullable' => 'Kata sandi hanya boleh diisi jika ingin mengubahnya.',
@@ -64,7 +64,6 @@ class UserRequest extends FormRequest
             'user_roles_id.nullable' => 'Peran pengguna bersifat opsional.',
         ];
     }
-
 
     /**
      * Create rules.
@@ -78,8 +77,9 @@ class UserRequest extends FormRequest
             'photo' => 'nullable|file|image',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'phone_number' => 'numeric',
-            'user_roles_id' => 'required',
+            'phone_number' => 'numeric|nullable',
+            // 'user_roles_id' => 'required',
+            'user_roles_id' => 'nullable',
         ];
     }
 

@@ -42,12 +42,14 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
     Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword']);
 
+    // Register new users
+    Route::post('/users', [UserController::class, 'store']);
+
     // Protected routes (require auth)
     Route::middleware(['auth.api'])->group(function () {
         // Users
         Route::get('/users', [UserController::class, 'index']);
         Route::get('/users/{id}', [UserController::class, 'show']);
-        Route::post('/users', [UserController::class, 'store']);
         Route::put('/users', [UserController::class, 'update']);
         Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
