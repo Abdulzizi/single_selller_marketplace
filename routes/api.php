@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RoleController;
@@ -37,6 +38,9 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     Route::get('/product/{slug}', [ProductController::class, 'showBySlug']);
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{id}', [CategoryController::class, 'show']);
+
+    // Testing route
+    Route::get('/dashboard/data', [DashboardController::class, 'index']);
 
     // Forgot password (public)
     Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink']);
