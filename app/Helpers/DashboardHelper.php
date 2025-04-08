@@ -34,30 +34,54 @@ class DashboardHelper
 
     private function getTotalSales(): array
     {
-        return $this->orderDetailModel->selectRaw('SUM(total) as sales, MONTH(created_at) as month')
+        return $this->orderDetailModel
+            ->selectRaw('SUM(total) as sales, DATE_FORMAT(created_at, "%Y-%m") as month')
             ->groupBy('month')
             ->orderBy('month')
-            ->pluck('sales')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'month' => $row->month,
+                    'value' => (float) $row->sales,
+                ];
+            })
             ->toArray();
     }
+
 
     private function getNewUsers(): array
     {
-        return $this->userModel->selectRaw('COUNT(id) as count, MONTH(created_at) as month')
+        return $this->userModel
+            ->selectRaw('COUNT(id) as count, DATE_FORMAT(created_at, "%Y-%m") as month')
             ->groupBy('month')
             ->orderBy('month')
-            ->pluck('count')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'month' => $row->month,
+                    'value' => (int) $row->count,
+                ];
+            })
             ->toArray();
     }
 
+
     private function getOrders(): array
     {
-        return $this->orderModel->selectRaw('COUNT(id) as count, MONTH(created_at) as month')
+        return $this->orderModel
+            ->selectRaw('COUNT(id) as count, DATE_FORMAT(created_at, "%Y-%m") as month')
             ->groupBy('month')
             ->orderBy('month')
-            ->pluck('count')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'month' => $row->month,
+                    'value' => (int) $row->count,
+                ];
+            })
             ->toArray();
     }
+
 
     private function getRevenueDistribution(): array
     {
