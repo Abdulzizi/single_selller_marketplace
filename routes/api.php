@@ -31,6 +31,7 @@ Route::prefix('v1')->middleware(['log.activity'])->group(function () {
     Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:10,2');
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware(['auth.api']);
     Route::get('/auth/profile', [AuthController::class, 'profile'])->middleware(['auth.api']);
+    Route::post('/auth/refresh', [AuthController::class, 'refresh']);
 
     // Public routes
     Route::get('/products', [ProductController::class, 'index']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Helpers\DashboardHelper;
+use App\Http\Resources\Dashboard\DashboardResource;
 use Illuminate\Http\JsonResponse;
 
 class DashboardController extends Controller
@@ -15,13 +16,15 @@ class DashboardController extends Controller
         $this->dashboardHelper = new DashboardHelper();
     }
 
-    public function index(): JsonResponse
+    public function index()
     {
         $dashboardData = $this->dashboardHelper->getDashboardData();
 
-        return response()->json([
-            'status_code' => 200,
-            'data' => $dashboardData
+        return response()->success([
+            'list' => new DashboardResource($dashboardData),
+            // 'meta' => [
+            //     'total' => count($dashboardData['new_users']),
+            // ],
         ]);
     }
 }
